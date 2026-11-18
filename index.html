@@ -37,8 +37,24 @@ figcaption { display:flex; justify-content:space-between; gap:8px; padding:12px 
 .row + .row { border-top:1px solid #a4aa9b; }
 h2 { font-size:clamp(2.6rem,5vw,5.2rem); }
 .details { font-size:clamp(1.05rem,1.5vw,1.38rem); line-height:1.55; margin-top:22px; max-width:56ch; }
-footer a { font-size:clamp(1.55rem,4vw,4.4rem); letter-spacing:-.045em; }
-footer .label { color:var(--accent); }
+
+.contact { display:grid; grid-template-columns:1fr 1.1fr; gap:8%; padding:clamp(52px,7vw,104px) 0; align-items:start; }
+.contact .label { display:flex; gap:.7rem; align-items:center; }
+.contact .label::before { content:""; width:.55rem; height:.55rem; background:var(--accent); }
+.contact h2 { font-size:clamp(3rem,5vw,5.2rem); margin:clamp(28px,4vw,58px) 0 20px; }
+.contact-copy { max-width:34ch; font-size:1.1rem; line-height:1.55; color:#c6cbc2; }
+.inquiry { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 18px; padding:clamp(20px,3vw,42px); background:#1b211e; border:1px solid var(--line); }
+.inquiry label { display:grid; gap:8px; font:.78rem/1.4 monospace; color:#d7ddd3; }
+.inquiry input,.inquiry textarea { width:100%; box-sizing:border-box; border:1px solid #697168; border-radius:0; background:var(--ink); color:var(--paper); padding:12px; font:1rem/1.4 Arial,sans-serif; }
+.inquiry textarea { resize:vertical; min-height:128px; }
+.inquiry :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.wide { grid-column:1/-1; }
+.inquiry button { cursor:pointer; border:0; padding:16px; font:600 1rem Arial,sans-serif; color:var(--ink); background:var(--accent); }
+.inquiry button:hover { background:white; }
+.form-note { font-size:.88rem; line-height:1.5; color:#c6cbc2; }
+@media(max-width:760px) { .contact { grid-template-columns:1fr; gap:30px; } }
+@media(max-width:490px) { .inquiry { grid-template-columns:1fr; } }
+
 @media(max-width:700px) {
 header { min-height:65px; } nav { gap:12px; }
 .hero,.row { grid-template-columns:1fr; } .hero { gap:32px; }
@@ -58,9 +74,31 @@ figure img { height:360px; } .row { gap:0; } .label { margin-bottom:16px; }
 <div class="light"><section class="row wrap" id="js-1"><p class="label">Our work / JS-1</p><div><h2>Proximity sensing</h2><p class="details">Small drones are inexpensive to build and costly to counter. Our first prototype, JS-1, explores how compact proximity sensors could bring down the cost of counter-drone defense. We’ve tested the sensing hardware against a surrogate target.</p></div></section>
 <section class="row wrap" id="company"><p class="label">Company</p><div><h2>Jericho Systems</h2><p class="details">Based in San Francisco, our team builds and tests sensing hardware in small batches. That hands-on work shapes each revision of JS-1.</p></div></section></div>
 </main>
-<footer id="contact" class="row wrap" aria-labelledby="contact-heading">
-  <h2 id="contact-heading">Contact us</h2>
-  <div><a href="mailto:isaac@jericho.systems">isaac@jericho.systems</a></div>
+<footer id="contact" class="contact wrap" aria-labelledby="contact-heading">
+  <div>
+    <p class="label">Contact</p>
+    <h2 id="contact-heading">Talk to Jericho.</h2>
+    <p class="contact-copy">Have a question about JS-1 or an idea for a partnership? Tell us what you’re working on.</p>
+  </div>
+  <form class="inquiry" id="inquiry" action="mailto:isaac@jericho.systems" method="post" enctype="text/plain">
+    <label>First name *<input name="first" autocomplete="given-name" required></label>
+    <label>Last name *<input name="last" autocomplete="family-name" required></label>
+    <label>Company<input name="company" autocomplete="organization"></label>
+    <label>Work email *<input type="email" name="email" autocomplete="email" required></label>
+    <label class="wide">Message *<textarea name="message" rows="5" required></textarea></label>
+    <button class="wide" type="submit">Continue to email ↗</button>
+    <p class="form-note wide">Your email app opens with your message ready to send. You can also write to <a href="mailto:isaac@jericho.systems">isaac@jericho.systems</a>.</p>
+  </form>
 </footer>
+<script>
+document.getElementById('inquiry').addEventListener('submit', function (event) {
+  event.preventDefault();
+  const fields = new FormData(this);
+  const name = fields.get('first').trim() + ' ' + fields.get('last').trim();
+  const company = fields.get('company').trim();
+  const body = [fields.get('message').trim(), '', name, company, fields.get('email')].filter((line, index) => index !== 3 || line).join('\r\n');
+  window.location.href = this.action + '?subject=' + encodeURIComponent('Jericho Systems inquiry from ' + name) + '&body=' + encodeURIComponent(body);
+});
+</script>
 </body>
 </html>
