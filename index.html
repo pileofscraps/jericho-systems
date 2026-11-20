@@ -69,6 +69,16 @@ header { min-height:65px; } nav { gap:12px; }
 .upcoming article { border-top:1px solid #90978b; padding-top:18px; }
 .upcoming h3 { font-size:clamp(1.7rem,3vw,2.6rem); }
 .upcoming p { margin-top:10px; font:.76rem/1.5 monospace; letter-spacing:.07em; text-transform:uppercase; }
+.team { background:#1b211e; padding:clamp(40px,6vw,80px) 0; }
+.team-inner { max-width:900px; border-top:1px solid var(--line); padding-top:22px; }
+.team .team-heading { font:500 .78rem/1.5 monospace; text-transform:uppercase; letter-spacing:.1em; }
+.team-heading::before { content:""; display:inline-block; width:.5rem; height:.5rem; margin-right:.75rem; background:#c0987c; }
+.founder { display:grid; grid-template-columns:minmax(140px,220px) minmax(0,1fr); align-items:center; gap:clamp(24px,5vw,64px); margin-top:clamp(30px,4vw,50px); }
+.founder-mark { display:grid; place-items:center; aspect-ratio:1; background:#29312c; color:#c0987c; font-size:clamp(4rem,8vw,7rem); letter-spacing:-.08em; }
+.founder-profile .label { margin:0 0 10px; color:#c6cbc2; }
+.founder-profile h3 { font-size:clamp(2.4rem,5vw,4.5rem); }
+.founder-profile p:last-child { max-width:44ch; margin-top:18px; font-size:1.05rem; line-height:1.55; color:#c6cbc2; }
+@media(max-width:540px) { .founder { grid-template-columns:1fr; } .founder-mark { width:110px; } }
 </style>
 </head>
 <body>
@@ -92,6 +102,19 @@ header { min-height:65px; } nav { gap:12px; }
   <div class="wrap upcoming">
     <article><h3>12 Gauge</h3><p>Coming soon</p></article>
     <article><h3>.50 Cal</h3><p>Coming soon</p></article>
+  </div>
+</section>
+<section class="team" aria-labelledby="team-heading">
+  <div class="wrap team-inner">
+    <h2 class="team-heading" id="team-heading">Meet the team</h2>
+    <article class="founder" aria-labelledby="founder-name">
+      <div class="founder-mark" aria-hidden="true">IL</div>
+      <div class="founder-profile">
+        <p class="label">Founder</p>
+        <h3 id="founder-name">Isaac Lau</h3>
+        <p>Isaac founded Jericho Systems after studying computation and cognition at MIT.</p>
+      </div>
+    </article>
   </div>
 </section>
 </main>
